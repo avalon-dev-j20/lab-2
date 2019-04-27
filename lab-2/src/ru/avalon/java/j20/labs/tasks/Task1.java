@@ -11,6 +11,7 @@ import java.io.*;
  * в двоичном режиме".
  */
 public class Task1 implements Task {
+    //
 
     /**
      * {@inheritDoc}
@@ -35,7 +36,7 @@ public class Task1 implements Task {
          */
 
 
-         /* 2. Реализовать метод write.
+        /* 2. Реализовать метод write.
          *
          *    При реализации метода следует пользоваться типами данных:
          *    OutputStream и FileOutputStream.
@@ -55,14 +56,14 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private String read(File file) throws IOException {
-        InputStream reading = new FileInputStream(file);
-        try{
-        byte[] buffer = new byte[reading.available()];
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        reading.read(buffer, 0, reading.available());
-        baos.write(buffer);
-        String text = baos.toString();
-        return text;} finally {reading.close();}
+        try (InputStream reading = new FileInputStream(file)) {
+            byte[] buffer = new byte[reading.available()];
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            reading.read(buffer, 0, reading.available());
+            baos.write(buffer);
+            String text = baos.toString();
+            return text;
+        }
 
 
     }
@@ -76,10 +77,9 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, String text) throws IOException {
-        OutputStream writing = new FileOutputStream(file);
-        try{
-            byte[]buffer = text.getBytes();
+        try (OutputStream writing = new FileOutputStream(file)) {
+            byte[] buffer = text.getBytes();
             writing.write(buffer, 0, buffer.length);
-        } finally {writing.close();}
+        }
     }
 }

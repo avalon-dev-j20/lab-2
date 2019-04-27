@@ -37,8 +37,8 @@ public class Application {
          * порядок и/или закомментировать любой из элементов
          * массива.
          */
-     //  for (Task task : tasks) task.run();
-        tasks[5].run();
+      for (Task task : tasks) task.run();
+
 
     }
 }
