@@ -2,8 +2,7 @@ package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Задание №1
@@ -12,6 +11,7 @@ import java.io.IOException;
  * в двоичном режиме".
  */
 public class Task1 implements Task {
+    //
 
     /**
      * {@inheritDoc}
@@ -33,8 +33,10 @@ public class Task1 implements Task {
          *
          *    Для сохранениня прочитанных данных следует пользоваться
          *    классом ByteArrayOutputStream.
-         *
-         * 2. Реализовать метод write.
+         */
+
+
+        /* 2. Реализовать метод write.
          *
          *    При реализации метода следует пользоваться типами данных:
          *    OutputStream и FileOutputStream.
@@ -54,7 +56,16 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private String read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+        try (InputStream reading = new FileInputStream(file)) {
+            byte[] buffer = new byte[reading.available()];
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            reading.read(buffer, 0, reading.available());
+            baos.write(buffer);
+            String text = baos.toString();
+            return text;
+        }
+
+
     }
 
     /**
@@ -66,6 +77,9 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, String text) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (OutputStream writing = new FileOutputStream(file)) {
+            byte[] buffer = text.getBytes();
+            writing.write(buffer, 0, buffer.length);
+        }
     }
 }
